@@ -1,0 +1,23 @@
+server:
+  port: 8085
+
+spring:
+  #MySQL
+  datasource:
+    # H2 ?? ???
+    url: jdbc:h2:mem:blog
+
+  #JPA
+  jpa:
+    # ?? ?? ??
+    show-sql : true
+    properties:
+      hibernate:
+        format_sql: true
+
+    # ??? ?? ?? data.sql ??
+    defer-datasource-initialization: true
+
+  h2:
+    console:
+      enabled: true
