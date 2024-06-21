@@ -12,17 +12,23 @@ import lombok.NoArgsConstructor;
 public class Article {
     @Id // id 필드를 기본키로 지정
     @GeneratedValue(strategy = GenerationType.IDENTITY) // 기본키를 자동으로 1씩 증가
-    @Column(name = "id", updatable = false)
+    @Column(name = "id", nullable = false, updatable = false)
     private Long id;
 
-    @Column(name = "title", updatable = false) // title - not null 컬럼과 매핑
+    @Column(name = "title", nullable = false, updatable = true) // title - not null 컬럼과 매핑
     private String title;
 
-    @Column(name = "content", updatable = false)
+    @Column(name = "content", nullable = false, updatable = true) // content - not null
     private String content;
 
     @Builder // 빌더 패턴으로 객체 생성
     public Article(String title, String content) {
+        this.title = title;
+        this.content = content;
+    }
+
+    // 블로그 글 수정
+    public void update(String title, String content){
         this.title = title;
         this.content = content;
     }
