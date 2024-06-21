@@ -19,8 +19,7 @@ import org.springframework.web.context.WebApplicationContext;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -119,5 +118,31 @@ class BlogApiControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.content").value(content))
                 .andExpect(jsonPath("$.title").value(title));
+    }
+
+    // 블로그 글 삭제
+    @DisplayName("deleteArticle : 블로그 글 삭제 성공 !")
+    @Test
+    public void deleteArticle() throws Exception {
+        // given
+        final String url = "/api/articles/{id}";
+        final String title = "title";
+        final String content = "content";
+
+        Article savedArticle = blogRepository.save(Article.builder()
+                .title(title)
+                .content(content)
+                .build());
+
+        // when
+        mockMvc.perform(delete(url, savedArticle.getId()))
+                .andExpect(status().isOk());
+
+        // then
+        // 글 삭제 후 데이터베이스에 저장된 모든 글 조회
+        // 조회된 글 목록 비어있는지 확인
+        List<Article> articles = blogRepository.findAll();
+        assertThat(articles).isEmpty();
+
     }
 }
