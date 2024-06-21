@@ -1,6 +1,7 @@
 package com.blog.controller;
 
 import com.blog.dto.ArticleResponse;
+import com.blog.dto.UpdateArticleRequest;
 import lombok.RequiredArgsConstructor;
 import com.blog.domain.Article;
 import com.blog.dto.AddArticleRequest;
@@ -55,4 +56,14 @@ public class BlogApiController {
         return ResponseEntity.ok()
                 .build();
     }
+
+    // 블로그 글 수정
+    @PutMapping("/api/articles/{id}")
+    public ResponseEntity<Article> updateArticle(@PathVariable("id") long id, @RequestBody UpdateArticleRequest request){
+        Article updateArticle = blogService.update(id, request);
+
+        return ResponseEntity.ok()
+                .body(updateArticle);
+    }
+
 }
