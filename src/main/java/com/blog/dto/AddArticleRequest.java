@@ -1,4 +1,4 @@
-package com.blog.service;
+package com.blog.dto;
 
 import com.blog.domain.Article;
 import lombok.AllArgsConstructor;
